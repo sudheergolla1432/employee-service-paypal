@@ -1,0 +1,21 @@
+package com.paypal.bfs.test.employeeserv.utility;
+
+/**
+ * Custom exception created to handle our exceptions
+ * 
+ */
+public class EmployeeNotFoundException extends RuntimeException {
+
+	public EmployeeNotFoundException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public EmployeeNotFoundException(String message) {
+		super(message);
+	}
+
+	public EmployeeNotFoundException(Throwable cause) {
+		super(cause);
+	}
+	
+}
