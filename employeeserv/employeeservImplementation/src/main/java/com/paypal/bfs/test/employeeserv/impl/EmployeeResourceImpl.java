@@ -33,15 +33,19 @@ public class EmployeeResourceImpl implements EmployeeResource {
 	 * is handled by custom exception Handler
      */
     @Override
-    public ResponseEntity<Employee> getEmployeeById(Integer id) {
+    public ResponseEntity<Employee> getEmployeeById(String id) {
     	
-    	
-    	if(id < 0) {
-    		
-    		throw new IllegalArgumentFoundException("Illegal Argument given for id: "+id);
-    		
+    	int idVal;
+    	try {
+    			idVal = Integer.parseInt(id);
+    			if(idVal <= 0) {
+    				throw new Exception();
+    			}
     	}
-    	Optional<Employee> employee = employeeServDao.findById(id);
+    	catch(Exception e) {
+    		throw new IllegalArgumentFoundException("Illegal Argument given - id should be int value greater than 0 : "+id);
+    	}
+    	Optional<Employee> employee = employeeServDao.findById(idVal);
     	
     	if(employee.isEmpty()) {
     		

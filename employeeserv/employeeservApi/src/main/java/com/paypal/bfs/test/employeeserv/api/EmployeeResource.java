@@ -21,7 +21,7 @@ public interface EmployeeResource {
      * @return {@link Employee} resource.
      */
     @GetMapping("/v1/bfs/employees/{id}")
-    ResponseEntity<Employee> getEmployeeById(@PathVariable("id") Integer id);
+    ResponseEntity<Employee> getEmployeeById(@PathVariable("id") String id);
 
     // ----------------------------------------------------------
     // TODO - add a new operation for creating employee resource.

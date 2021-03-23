@@ -5,7 +5,7 @@ package com.paypal.bfs.test.employeeserv.api.model;
  * <p>
  * Error response object
  * 
- * Created to accomadate error responses
+ * Created to accommodate error responses
  * 
  */
 public class ErrorResponse {
