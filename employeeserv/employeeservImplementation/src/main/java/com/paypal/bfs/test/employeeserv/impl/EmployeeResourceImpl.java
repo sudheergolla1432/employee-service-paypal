@@ -2,21 +2,17 @@ package com.paypal.bfs.test.employeeserv.impl;
 
 import java.util.List;
 import java.util.Optional;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.paypal.bfs.test.employeeserv.api.EmployeeResource;
 import com.paypal.bfs.test.employeeserv.api.model.Address;
 import com.paypal.bfs.test.employeeserv.api.model.Employee;
 import com.paypal.bfs.test.employeeserv.dao.EmployeeServDao;
 import com.paypal.bfs.test.employeeserv.utility.EmployeeNotFoundException;
-import com.paypal.bfs.test.employeeserv.utility.IllegalArgumentFoundException;
 import com.paypal.bfs.test.employeeserv.utility.ObjectHelper;
 
 /**
@@ -35,6 +31,8 @@ public class EmployeeResourceImpl implements EmployeeResource {
     @Override
     public ResponseEntity<Employee> getEmployeeById(String id) {
     	
+    	// parsing string id value to int to check if any illegal argument is given through path variable
+    	// if illegal argument given handling it through customer exception
     	int idVal;
     	try {
     			idVal = Integer.parseInt(id);
@@ -43,10 +41,13 @@ public class EmployeeResourceImpl implements EmployeeResource {
     			}
     	}
     	catch(Exception e) {
-    		throw new IllegalArgumentFoundException("Illegal Argument given - id should be int value greater than 0 : "+id);
+    		throw new IllegalArgumentException("Illegal Argument given - id should be int value greater than 0 : "+id);
     	}
+    	
+    	// dao call to get employee by given id
     	Optional<Employee> employee = employeeServDao.findById(idVal);
     	
+    	// if employee not found returning custom exception
     	if(employee.isEmpty()) {
     		
     		throw new EmployeeNotFoundException("Employee not found with id : "+id);

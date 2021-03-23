@@ -30,18 +30,6 @@ public class EmployeeExceptionHandler {
 			
 			return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 		 }
-	    
-	    @ExceptionHandler
-		public ResponseEntity<ErrorResponse> handleException(IllegalArgumentFoundException exc) {
-			
-			ErrorResponse error = new ErrorResponse();
-			
-			error.setStatus(HttpStatus.NOT_FOUND.value());
-			error.setMessage(exc.getMessage());
-			error.setTimeStamp(System.currentTimeMillis());
-			
-			return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-		 }
 		
 	    @ExceptionHandler
 		public ResponseEntity<ErrorResponse> handleException(MethodArgumentNotValidException exc) {
@@ -78,15 +66,11 @@ public class EmployeeExceptionHandler {
 		
 		@ExceptionHandler
 		public ResponseEntity<ErrorResponse> handleException(Exception exc) {
-			String errorMessage = exc.getMessage();
-			if(exc instanceof IllegalArgumentException) {
-				errorMessage = "Illegal argument";
-			}
 			
 			ErrorResponse error = new ErrorResponse();
 			
 			error.setStatus(HttpStatus.BAD_REQUEST.value());
-			error.setMessage(errorMessage);
+			error.setMessage(exc.getMessage());
 			error.setTimeStamp(System.currentTimeMillis());
 			
 			return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
